@@ -48,9 +48,9 @@ end
 
 def bump(image, image_version)
   run("echo #{image_version} > base/VERSION") if image == 'base'
-  run("sed -i '' -e 's/^\(# NAME:\).*$$/\1     discourse\/#{image}/' #{image}/Dockerfile")
+  run("sed -i '' -e 's/^\(# NAME:\).*$$/\1     brennerspear\/#{image}/' #{image}/Dockerfile")
   run("sed -i '' -e 's/^\(# VERSION:\).*$$/\1  #{image_version}/' #{image}/Dockerfile")
-  run("sed -i '' -e 's/^\(FROM discourse\/[^:]*:\).*/\1#{image_version}/' #{image}/Dockerfile")
+  run("sed -i '' -e 's/^\(FROM brennerspear\/[^:]*:\).*/\1#{image_version}/' #{image}/Dockerfile")
 end
 
 def dev_deps()
@@ -83,11 +83,11 @@ end
 ensure_docker_squash
 
 images = {
-  base: { name: 'base', tag: "discourse/base:#{version}", squash: true },
-  discourse: { name: 'discourse', tag: "discourse/discourse:#{version}", squash: true, layers_to_keep: 1 },
-  discourse_test: { name: 'discourse_test', tag: "discourse/discourse_test:#{version}", squash: true, layers_to_keep: 2 },
-  discourse_dev: { name: 'discourse_dev', tag: "discourse/discourse_dev:#{version}", squash: false },
-  discourse_bench: { name: 'discourse_bench', tag: "discourse/discourse_bench:#{version}", squash: false }
+  base: { name: 'base', tag: "brennerspear/base:#{version}", squash: true },
+  discourse: { name: 'discourse', tag: "brennerspear/btc_discourse:#{version}", squash: true, layers_to_keep: 1 },
+  discourse_test: { name: 'discourse_test', tag: "brennerspear/btc_discourse_test:#{version}", squash: true, layers_to_keep: 2 },
+  discourse_dev: { name: 'discourse_dev', tag: "brennerspear/btc_discourse_dev:#{version}", squash: false },
+  discourse_bench: { name: 'discourse_bench', tag: "brennerspear/btc_discourse_bench:#{version}", squash: false }
 }
 
 todo.each do |image|

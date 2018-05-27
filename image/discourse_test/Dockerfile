@@ -1,12 +1,12 @@
 # NAME:     discourse/discourse_test
 # VERSION:  release
 ARG tag=build
-FROM discourse/base:$tag
+FROM brennerspear/base:$tag
 
 MAINTAINER Sam Saffron "https://twitter.com/samsaffron"
 
 RUN gem update bundler --force &&\
-      cd /var/www/discourse &&\
+      cd /var/www/btc_discourse &&\
       chown -R discourse . &&\
       rm -fr .bundle &&\
       sudo -u discourse git pull &&\
@@ -21,8 +21,8 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo ap
     apt-get update &&\
     apt-get install -y libgconf-2-4 google-chrome-stable yarn nodejs &&\
     npm install -g eslint babel-eslint &&\
-    cd /var/www/discourse && sudo -E -u discourse -H yarn install
+    cd /var/www/btc_discourse && sudo -E -u discourse -H yarn install
 
-WORKDIR /var/www/discourse
+WORKDIR /var/www/btc_discourse
 ENV LANG en_US.UTF-8
 ENTRYPOINT sudo -E -u discourse -H ruby script/docker_test.rb

@@ -1,4 +1,4 @@
-# NAME:     discourse/base
+# NAME:     brennerspear/base
 # VERSION:  release
 FROM ubuntu:16.04
 
@@ -7,6 +7,7 @@ ENV RUBY_ALLOCATOR /usr/lib/libjemalloc.so.1
 ENV COMPRESS_BROTLI 1
 
 #LABEL maintainer="Sam Saffron \"https://twitter.com/samsaffron\""
+#LABEL maintainer="Brenner Spear \"https://twitter.com/brennerspear\""
 
 RUN echo 2.0.`date +%Y%m%d` > /VERSION
 
@@ -125,11 +126,11 @@ ADD cron.d_anacron /etc/cron.d/anacron
 RUN useradd discourse -s /bin/bash -m -U &&\
     mkdir -p /var/www &&\
     cd /var/www &&\
-    git clone https://github.com/discourse/discourse.git &&\
-    cd discourse &&\
-    git remote set-branches --add origin tests-passed &&\
-    chown -R discourse:discourse /var/www/discourse &&\
-    cd /var/www/discourse &&\
+    git clone https://github.com/brennerspear/btc_discourse.git &&\
+    cd btc_discourse &&\
+    # git remote set-branches --add origin tests-passed &&\ # we have ours on master
+    chown -R discourse:discourse /var/www/btc_discourse &&\
+    cd /var/www/btc_discourse &&\
     sudo -u discourse bundle install --deployment \
          --without test --without development &&\
-    find /var/www/discourse/vendor/bundle -name tmp -type d -exec rm -rf {} +
+    find /var/www/btc_discourse/vendor/bundle -name tmp -type d -exec rm -rf {} +

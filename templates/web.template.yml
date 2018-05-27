@@ -18,9 +18,9 @@ env:
 
 params:
   # SSH key is required for remote access into the container
-  version: tests-passed
+  version: master
 
-  home: /var/www/discourse
+  home: /var/www/btc_discourse
   upload_size: 10m
 
 run:
@@ -42,7 +42,7 @@ run:
 
   - exec: /usr/local/bin/ruby -e 'if ENV["DISCOURSE_SMTP_ADDRESS"] == "smtp.example.com"; puts "Aborting! Mail is not configured!"; exit 1; end'
   - exec: /usr/local/bin/ruby -e 'if ENV["DISCOURSE_HOSTNAME"] == "discourse.example.com"; puts "Aborting! Domain is not configured!"; exit 1; end'
-  - exec: chown -R discourse /home/discourse
+  - exec: chown -R discourse /home/btc_discourse
   # TODO: move to base image (anacron can not be fired up using rc.d)
   - exec: rm -f /etc/cron.d/anacron
   - file:
@@ -58,7 +58,7 @@ run:
      contents: |
         #!/bin/bash
         env > ~/boot_env
-        conf=/var/www/discourse/config/discourse.conf
+        conf=/var/www/btc_discourse/config/discourse.conf
 
         # find DISCOURSE_ env vars, strip the leader, lowercase the key
         /usr/local/bin/ruby -e 'ENV.each{|k,v| puts "#{$1.downcase} = '\''#{v}'\''" if k =~ /^DISCOURSE_(.*)/}' > $conf
@@ -80,7 +80,7 @@ run:
         # postgres
         cd $home
         chown -R discourse:www-data /shared/log/rails
-        LD_PRELOAD=$RUBY_ALLOCATOR HOME=/home/discourse USER=discourse exec chpst -u discourse:www-data -U discourse:www-data bundle exec config/unicorn_launcher -E production -c config/unicorn.conf.rb
+        LD_PRELOAD=$RUBY_ALLOCATOR HOME=/home/btc_discourse USER=discourse exec chpst -u discourse:www-data -U discourse:www-data bundle exec config/unicorn_launcher -E production -c config/unicorn.conf.rb
 
   - file:
      path: /etc/service/nginx/run
@@ -177,7 +177,7 @@ run:
      chmod: +x
      contents: |
        #!/bin/bash
-       (cd /var/www/discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec script/discourse "$@")
+       (cd /var/www/btc_discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec script/discourse "$@")
 
   - file:
      path: /usr/local/bin/rails
@@ -187,9 +187,9 @@ run:
        # If they requested a console, load pry instead
        if [ "$*" == "c" -o "$*" == "console" ]
        then
-        (cd /var/www/discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec pry -r ./config/environment)
+        (cd /var/www/btc_discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec pry -r ./config/environment)
        else
-        (cd /var/www/discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec script/rails "$@")
+        (cd /var/www/btc_discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec script/rails "$@")
        fi
 
   - file:
@@ -197,21 +197,21 @@ run:
      chmod: +x
      contents: |
        #!/bin/bash
-       (cd /var/www/discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec bin/rake "$@")
+       (cd /var/www/btc_discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec bin/rake "$@")
 
   - file:
      path: /usr/local/bin/rbtrace
      chmod: +x
      contents: |
        #!/bin/bash
-       (cd /var/www/discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec rbtrace "$@")
+       (cd /var/www/btc_discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec rbtrace "$@")
 
   - file:
      path: /usr/local/bin/stackprof
      chmod: +x
      contents: |
        #!/bin/bash
-       (cd /var/www/discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec stackprof "$@")
+       (cd /var/www/btc_discourse && RAILS_ENV=production sudo -H -E -u discourse bundle exec stackprof "$@")
 
   - file:
      path: /etc/update-motd.d/10-web

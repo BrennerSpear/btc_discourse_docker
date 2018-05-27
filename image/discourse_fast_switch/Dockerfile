@@ -2,7 +2,7 @@
 # VERSION:  1.4.0
 
 # Allow to easily switch Ruby version in images that derive off this
-FROM discourse/base:1.4.0
+FROM brennerspear/base:1.4.0
 
 #LABEL maintainer="Sam Saffron \"https://twitter.com/samsaffron\""
 

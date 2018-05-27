@@ -7,7 +7,7 @@ Dir.glob('/usr/ruby_20/*/**').each do |file|
   FileUtils.rm(file) if File.exists?(file) && !File.directory?(file)
 end
 
-system("cd /var/www/discourse && git pull")
+system("cd /var/www/btc_discourse && git pull")
 
 ['22', '23'].each do |v|
 
@@ -26,5 +26,5 @@ RUBY
 
   system("chmod +x #{bin}")
   system("use_#{v} && gem update --system && gem install bundler --force")
-  system("use_#{v} && cd /var/www/discourse && sudo -u discourse bundle install --deployment --without test --without development")
+  system("use_#{v} && cd /var/www/btc_discourse && sudo -u discourse bundle install --deployment --without test --without development")
 end

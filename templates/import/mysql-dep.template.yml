@@ -1,7 +1,7 @@
 # This template adds the 'mysql2' gem for import scripts depending on it
 
 params:
-  home: /var/www/discourse
+  home: /var/www/btc_discourse
 
 hooks:
   after_bundle_exec:

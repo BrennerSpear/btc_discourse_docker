@@ -1,7 +1,7 @@
 # This template installs MariaDB and all dependencies needed for importing from phpBB3.
 
 params:
-  home: /var/www/discourse
+  home: /var/www/btc_discourse
 
 hooks:
   after_web_config:
