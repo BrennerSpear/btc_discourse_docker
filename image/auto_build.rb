@@ -4,10 +4,10 @@ require 'pty'
 require 'optparse'
 
 images = {
-  base: { name: 'base', tag: "discourse/base:build", squash: true },
-  discourse_test_build: { name: 'discourse_test', tag: "discourse/discourse_test:build", squash: false},
-  discourse_test_public: { name: 'discourse_test', tag: "discourse/discourse_test:release", squash: true, extra_args: ' --build-arg tag=release '},
-  discourse_dev: { name: 'discourse_dev', tag: "discourse/discourse_dev:build", squash: false },
+  base: { name: 'base', tag: "brennerspear/base:build", squash: true },
+  discourse_test_build: { name: 'discourse_test', tag: "brennerspear/discourse_test:build", squash: false},
+  discourse_test_public: { name: 'discourse_test', tag: "brennerspear/discourse_test:release", squash: true, extra_args: ' --build-arg tag=release '},
+  discourse_dev: { name: 'discourse_dev', tag: "brennerspear/discourse_dev:build", squash: false },
 }
 
 def run(command)
